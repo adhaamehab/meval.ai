@@ -14,7 +14,8 @@ This is an early MVP implementation with:
 - ✅ Schema validation
 - 🚧 CLI implementation (coming soon)
 - 🚧 Source implementations (coming soon)
-- 🚧 Evaluator implementations (coming soon)
+- ✅ Gemini evaluator implementation
+- 🚧 OpenAI, Anthropic, Bedrock evaluators (coming soon)
 
 ## Configuration
 
@@ -122,10 +123,18 @@ go test ./...
 - `Validator`: Validates configuration structure and values
 - Support for experiment metadata with key-value pairs
 
+#### Evaluators Package
+- `GeminiEvaluator`: Google Gemini API integration for LLM evaluation
+  - Supports prompt templating with variable substitution
+  - Handles API authentication via environment variables
+  - Parses structured responses and metadata
+  - Batch evaluation support
+- `Factory`: Creates evaluators based on provider configuration
+
 #### Package Organization
 Each package owns its interfaces and implementations:
 - `sources`: Source interface and future implementations (JSON, CSV, Parquet)
-- `evaluators`: Evaluator interface and future provider implementations
+- `evaluators`: Evaluator interface and provider implementations (Gemini implemented)
 - `controller`: Controller interface for pipeline orchestration
 - `config`: Configuration types, reader, and validator with their interfaces
 
