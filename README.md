@@ -12,8 +12,9 @@ This is an early MVP implementation with:
 - ✅ YAML configuration reader and validator
 - ✅ Extensible interface design
 - ✅ Schema validation
+- ✅ JSON source with wildcard support
 - 🚧 CLI implementation (coming soon)
-- 🚧 Source implementations (coming soon)
+- 🚧 CSV and Parquet sources (coming soon)
 - 🚧 Evaluator implementations (coming soon)
 
 ## Configuration
@@ -32,7 +33,8 @@ inputs:
   - id: predictions
     format: json
     config:
-      path: ./data/input.json
+      path: ./data/input.json  # Can use wildcards: ./data/*.json
+      mode: array              # "array" or "lines" (default: array)
     schema:
       fields:
         - name: text
@@ -122,9 +124,17 @@ go test ./...
 - `Validator`: Validates configuration structure and values
 - Support for experiment metadata with key-value pairs
 
+#### Sources Package
+- `JSONSource`: Reads/writes JSON files with support for:
+  - JSON array format (standard JSON array of objects)
+  - JSON lines format (one JSON object per line)
+  - Wildcard path patterns (e.g., `data/*.json`)
+  - Schema validation for all records
+- `Factory`: Creates sources based on format configuration
+
 #### Package Organization
 Each package owns its interfaces and implementations:
-- `sources`: Source interface and future implementations (JSON, CSV, Parquet)
+- `sources`: Source interface and implementations (JSON implemented, CSV/Parquet coming)
 - `evaluators`: Evaluator interface and future provider implementations
 - `controller`: Controller interface for pipeline orchestration
 - `config`: Configuration types, reader, and validator with their interfaces

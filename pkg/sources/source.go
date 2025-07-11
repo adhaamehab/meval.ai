@@ -1,6 +1,10 @@
 package sources
 
-import "context"
+import (
+	"context"
+
+	"github.com/adhaamehab/meval.ai/pkg/config"
+)
 
 // Source defines the interface for input/output data sources
 type Source interface {
@@ -17,5 +21,5 @@ type Record map[string]interface{}
 
 // Factory creates sources based on configuration
 type Factory interface {
-	CreateSource(config map[string]interface{}, format string) (Source, error)
+	CreateSource(config map[string]interface{}, format string, schema config.SchemaConfig) (Source, error)
 }
