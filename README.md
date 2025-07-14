@@ -12,10 +12,11 @@ This is an early MVP implementation with:
 - ✅ YAML configuration reader and validator
 - ✅ Extensible interface design
 - ✅ Schema validation
+- ✅ JSON source with wildcard support
 - 🚧 CLI implementation (coming soon)
-- 🚧 Source implementations (coming soon)
 - ✅ Gemini evaluator implementation
 - 🚧 OpenAI, Anthropic, Bedrock evaluators (coming soon)
+- 🚧 CSV and Parquet sources (coming soon)
 
 ## Configuration
 
@@ -33,7 +34,8 @@ inputs:
   - id: predictions
     format: json
     config:
-      path: ./data/input.json
+      path: ./data/input.json  # Can use wildcards: ./data/*.json
+      mode: array              # "array" or "lines" (default: array)
     schema:
       fields:
         - name: text
@@ -131,10 +133,18 @@ go test ./...
   - Batch evaluation support
 - `Factory`: Creates evaluators based on provider configuration
 
+#### Sources Package
+- `JSONSource`: Reads/writes JSON files with support for:
+  - JSON array format (standard JSON array of objects)
+  - JSON lines format (one JSON object per line)
+  - Wildcard path patterns (e.g., `data/*.json`)
+  - Schema validation for all records
+- `Factory`: Creates sources based on format configuration
+
 #### Package Organization
 Each package owns its interfaces and implementations:
-- `sources`: Source interface and future implementations (JSON, CSV, Parquet)
-- `evaluators`: Evaluator interface and provider implementations (Gemini implemented)
+- `sources`: Source interface and implementations (JSON implemented, CSV/Parquet coming)
+- `evaluators`: Evaluator interface and future provider implementations
 - `controller`: Controller interface for pipeline orchestration
 - `config`: Configuration types, reader, and validator with their interfaces
 
