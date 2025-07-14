@@ -14,8 +14,9 @@ This is an early MVP implementation with:
 - ✅ Schema validation
 - ✅ JSON source with wildcard support
 - 🚧 CLI implementation (coming soon)
+- ✅ Gemini evaluator implementation
+- 🚧 OpenAI, Anthropic, Bedrock evaluators (coming soon)
 - 🚧 CSV and Parquet sources (coming soon)
-- 🚧 Evaluator implementations (coming soon)
 
 ## Configuration
 
@@ -123,6 +124,14 @@ go test ./...
 - `Reader`: Reads and parses YAML configuration files
 - `Validator`: Validates configuration structure and values
 - Support for experiment metadata with key-value pairs
+
+#### Evaluators Package
+- `GeminiEvaluator`: Google Gemini API integration for LLM evaluation
+  - Supports prompt templating with variable substitution
+  - Handles API authentication via environment variables
+  - Parses structured responses and metadata
+  - Batch evaluation support
+- `Factory`: Creates evaluators based on provider configuration
 
 #### Sources Package
 - `JSONSource`: Reads/writes JSON files with support for:
